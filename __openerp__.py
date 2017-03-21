@@ -31,9 +31,9 @@ make quote from project task
     """,
     'author': 'Filoquin',
     'website': 'http://sipecu.com.ar',
-    'depends': ['base'],
+    'depends': ['base','project'],
     'installable': True,
-    'data': ['control_inflacion.xml'],
+    'data': ['views/project_quote.xml'],
     'images':[],    
     'auto_install': False,
 }

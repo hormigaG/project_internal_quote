@@ -31,12 +31,12 @@ _logger = logging.getLogger(__name__)
 
 
 
-class project_internal_quote(models.Model):
+class project_internal_quote_category(models.Model):
 
-    _name = 'project.internal.quote'
+    _name = 'project.internal.quote.category'
     _description = 'project internal quote'
 
-    name = fields.Selection(('Materiales','Materiales'),('Horas de trabajo','Horas de trabajo'),('Combustible','Combustible'),('Viaticos','Viaticos'),('Ropa','Ropa'),('Alquileres','Alquileres'))
+    name = fields.Char()
     default_user_id = fields.Many2one('res.users')
 
 
@@ -47,7 +47,7 @@ class project_project(models.Model):
     _inherit = 'project.project'
 
     state = fields.Selection(selection_add=[('quoting', 'Presupuesto')])
-    internal_quote_task_ids=fields.Many2one('project.task','project_id')
+    internal_quote_task_ids=fields.One2many('project.task','project_id')
 
 
 
