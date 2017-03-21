@@ -8,14 +8,18 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='team']" position="after">
                     <page string="Presupuesto" name="quote">
-                        <field name="internal_quote_task_ids" context="{'default_quote_task':True}">
+                         <field name="internal_quote_dead_line"/>
+                        <field name="internal_quote_task_ids" context="{'default_quote_task':True, 'default_date_deadline':internal_quote_dead_line}">
                             <tree string="Quoted task" editable="top">
                                 <field name="quote_task" />
                                 <field name="name" />
                                 <field name="user_id" />
                                 <field name="stage_id" />
+                                <field name="date_deadline" />
                             </tree>
                         </field>
+                        <button name="create_sale_order" string="presupuestar" type="object" class="oe_highlight"  />
+
                     </page>
                 </xpath>
             </field>
@@ -27,7 +31,7 @@
             <field name="arch" type="xml">
                 <field position="after" name="work_ids">
                     <!--Materials used-->
-                    <field name="quote_ids" invisible="[('quote_task','==',False)]">
+                    <field name="quote_ids">
                         <tree string="Materials quoted" editable="top">
                             <field name="product_id" />
                             <field name="product_uom" />

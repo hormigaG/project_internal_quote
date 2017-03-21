@@ -51,9 +51,22 @@ class project_project(models.Model):
     def _compute_quote_task(self):
         self.internal_quote_task_ids = self.env["project.task"].search([("quote_task", "=",True),("project_id", "=",self.id)])
 
+    @api.depends('partner_id', 'internal_quote_task_ids','reviewer_id')
+    @api.one
+    def create_sale_order(self):
+        values = {}
+        values['partner_id'] = self.partner_id
+        values['project_id'] = self.id
+        values['order_line'] = []
+        for task in self.internal_quote_task_ids:
+            for item as task.quote_ids : 
+                values['order_line'].append(0,0,{'product_id':item.product_id, 'product_uom':item.product_id, 'product_uom_qty':item.quantity})
+        self.env['sale.order'].create(values)
 
     state = fields.Selection(selection_add=[('quoting', 'Presupuesto')])
-    internal_quote_task_ids=fields.One2many('project.task','project_id',compute="_compute_quote_task")
+    internal_quote_dead_line=fields.Date('Fecha de entrega de los presupuestos internos')
+
+    internal_quote_task_ids=fields.One2many('project.task','project_id') #,compute="_compute_quote_task"
 
 
 
@@ -69,6 +82,10 @@ class project_task_quote(models.Model):
     product_id = fields.Many2one('product.product')
     product_uom = fields.Many2one(comodel_name='product.uom', string='Unit of Measure')
     quantity = fields.Float(string='Quantity')
+
+    @api.onchange('product_id')
+    def do_stuff(self):
+        self.product_uom = self.product_id.uom
 
 
 class project_task(models.Model):
