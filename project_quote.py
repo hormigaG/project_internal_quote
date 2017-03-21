@@ -59,7 +59,7 @@ class project_project(models.Model):
         values['project_id'] = self.id
         values['order_line'] = []
         for task in self.internal_quote_task_ids:
-            for item as task.quote_ids : 
+            for item in task.quote_ids : 
                 values['order_line'].append(0,0,{'product_id':item.product_id, 'product_uom':item.product_id, 'product_uom_qty':item.quantity})
         self.env['sale.order'].create(values)
 
