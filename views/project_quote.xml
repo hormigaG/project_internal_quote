@@ -19,6 +19,7 @@
                             </tree>
                         </field>
                         <button name="create_sale_order" string="presupuestar" type="object" class="oe_highlight"  />
+                        <field name="sale_order_ids"/>
 
                     </page>
                 </xpath>

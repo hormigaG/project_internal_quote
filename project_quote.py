@@ -55,18 +55,19 @@ class project_project(models.Model):
     @api.one
     def create_sale_order(self):
         values = {}
-        values['partner_id'] = self.partner_id.id
+        values['partner_id'] = self.partner_id
         values['project_id'] = self.id
         values['order_line'] = []
         for task in self.internal_quote_task_ids:
-            for item in task.quote_ids : 
-                values['order_line'].append((0,0,{'product_id':item.product_id.id, 'product_uom':item.product_id.id, 'product_uom_qty':item.quantity}))
+            for item as task.quote_ids : 
+                values['order_line'].append(0,0,{'product_id':item.product_id, 'product_uom':item.product_id, 'product_uom_qty':item.quantity})
         self.env['sale.order'].create(values)
 
     state = fields.Selection(selection_add=[('quoting', 'Presupuesto')])
     internal_quote_dead_line=fields.Date('Fecha de entrega de los presupuestos internos')
 
     internal_quote_task_ids=fields.One2many('project.task','project_id') #,compute="_compute_quote_task"
+    sale_order_ids=fields.One2many('sale.order','project_id') #,compute="_compute_quote_task"
 
 
 
@@ -85,7 +86,7 @@ class project_task_quote(models.Model):
 
     @api.onchange('product_id')
     def do_stuff(self):
-        self.product_uom = self.product_id.uom
+        self.product_uom = self.product_id.uom_id.id
 
 
 class project_task(models.Model):
