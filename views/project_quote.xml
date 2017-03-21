@@ -1,0 +1,56 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+
+  <record id="view_project_form_quote" model="ir.ui.view">
+      <field name="name">project.form.quote</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.edit_project"/>
+      <field name="arch" type="xml">
+
+
+        <field position="after" name="team">
+
+          <page string="Presupuesto" name="quote">
+            <field name="internal_quote_task_ids" context="{'quote_task':True}"/ >
+              <tree string="Quoted task" editable="top">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="stage_id"/>
+            </tree>
+          </field>
+
+
+          </page>
+
+        </field>
+
+      </field>
+    </record>
+
+
+
+    <record id="view_project_task_form_materials" model="ir.ui.view">
+      <field name="name">project.task.form.quote</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_form2"/>
+      <field name="arch" type="xml">
+
+        <field position="after" name="work_ids">
+          <!--Materials used-->
+          <field name="quote_ids" invisible="[('quote_task','==',False)]" >
+            <tree string="Materials quoted" editable="top">
+              <field name="product_id"/>
+              <field name="product_uom"/>
+              <field name="quantity"/>
+            </tree>
+          </field>
+        </field>
+
+      </field>
+    </record>
+
+  </data>
+</openerp>
