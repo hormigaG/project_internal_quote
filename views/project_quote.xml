@@ -8,8 +8,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//page[@name='team']" position="after">
                     <page string="Presupuesto" name="quote">
-                        <field name="internal_quote_task_ids" context="{'quote_task':True}">
+                        <field name="internal_quote_task_ids" context="{'default_quote_task':True}">
                             <tree string="Quoted task" editable="top">
+                                <field name="quote_task" />
                                 <field name="name" />
                                 <field name="user_id" />
                                 <field name="stage_id" />

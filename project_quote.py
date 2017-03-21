@@ -46,8 +46,14 @@ class project_project(models.Model):
 
     _inherit = 'project.project'
 
+
+    @api.one
+    def _compute_quote_task(self):
+        self.internal_quote_task_ids = self.env["project.task"].search([("quote_task", "=",True),("project_id", "=",self.id)])
+
+
     state = fields.Selection(selection_add=[('quoting', 'Presupuesto')])
-    internal_quote_task_ids=fields.One2many('project.task','project_id')
+    internal_quote_task_ids=fields.One2many('project.task','project_id',compute="_compute_quote_task")
 
 
 
